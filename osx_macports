@@ -1,0 +1,14 @@
+#!/bin/bash -x
+
+depext=`opam install $* -e osx,macports`
+echo MacPorts depexts: $depext
+if [ "$depext" != "" ]; then
+  sudo port install $depext
+fi
+srcext=`opam install $* -e source,osx`
+echo OSX srcexts: $srcext
+if [ "$srcext" != "" ]; then
+  echo TODO: support srcext on OSX
+fi
+
+opam install $*

@@ -1,0 +1,91 @@
+#!/bin/sh -e
+
+detect_linux () {
+  echo Detected Linux kernel.
+  if [ -e "/etc/lsb-release" ]; then
+    . /etc/lsb-release
+    case $DISTRIB_ID in
+    "Ubuntu")
+      echo Detected Ubuntu distribution.
+      cp ubuntu opam-installext
+      ;;
+    "Debian")
+      echo Detected Debian distribution.
+      cp debian opam-installext
+      ;;
+    *) 
+      echo Unknown Linux distribution $DISTRIB_ID.
+      echo Please submit a bug report or patch at:
+      echo https://github.com/ocaml/opam-installext/issues
+      exit 1 ;;
+    esac
+  elif [ -e "/etc/centos-release" ]; then
+    echo Detected a CentOS distribution.
+    case `cat /etc/centos-release` in
+    "CentOS Linux release 6*")
+      echo Detected CentOS 6 distribution.
+      cp centos_6 opam-installext ;;
+    "CentOS Linux release 7*")
+      cp centos_7 opam-installext ;;
+    *)
+      echo Unknown CentOS distribution.
+      echo Please submit a bug report or patch at:
+      echo https://github.com/ocaml/opam-installext/issues
+      exit 1 ;;
+    esac
+  else
+    echo Unknown Linux distribution $DISTRIB_ID.
+    echo Please submit a bug report or patch at:
+    echo https://github.com/ocaml/opam-installext/issues
+    exit 1
+  fi
+}
+
+detect_osx () {
+  echo Detected MacOS X.
+  if [ -x "/usr/local/bin/brew" ]; then
+    echo Detected Homebrew.
+    cp osx_homebrew opam-installext
+  elif [ -x "/opt/local/bin/port" ]; then
+    echo Detected MacPorts.
+    cp osx_macports opam-installext
+  else
+    echo No MacOS X package manager found.
+    echo If you do have one installed, please submit a bug report or patch at:
+    echo https://github.com/ocaml/opam-installext/issues
+    exit 1
+  fi
+}
+
+detect_openbsd () {
+  echo Detected OpenBSD.
+  cp openbsd opam-installext
+}
+
+detect_freebsd () {
+  echo Detected FreeBSD.
+  cp freebsd opam-installext
+}
+ 
+detect_netbsd () {
+  echo Detected NetBSD.
+  cp netbsd opam-installext
+}
+
+case `uname -s` in
+"Darwin")
+  detect_osx ;;
+"Linux")
+  detect_linux ;;
+"OpenBSD")
+  detect_openbsd ;;
+"NetBSD")
+  detect_netbsd ;;
+"FreeBSD")
+  detect_freebsd ;;
+*)
+  echo Unknown operating system.
+  echo Please submit a bug report or patch at:
+  echo https://github.com/ocaml/opam-installext/issues
+  exit 1 ;;
+esac

@@ -1,0 +1,8 @@
+#!/bin/sh -ex
+
+depext=`opam install $* -e openbsd`
+echo OpenBSD depexts: $depext
+if [ "$depext" != "" ]; then
+  sudo pkg_add $depext
+fi
+opam install $*

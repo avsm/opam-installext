@@ -1,0 +1,8 @@
+#!/bin/sh -ex
+
+depext=`opam install $* -e freebsd`
+echo FreeBSD depexts: $depext
+if [ "$depext" != "" ]; then
+  sudo pkg install $depext
+fi
+opam install $*

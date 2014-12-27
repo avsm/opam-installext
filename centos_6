@@ -1,0 +1,9 @@
+#!/bin/sh -x
+
+depext=`opam install $* -e "centos,centos-6"`
+echo CentOS 6 depexts: $depext
+if [ "$depext" != "" ]; then 
+  sudo yum install -y $depext
+fi
+
+opam install $*

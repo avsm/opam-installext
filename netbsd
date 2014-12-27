@@ -1,0 +1,8 @@
+#!/bin/sh -ex
+
+depext=`opam install $* -e netbsd`
+echo NetBSD depexts: $depext
+if [ "$depext" != "" ]; then
+  sudo pkg_add $depext
+fi
+opam install $*

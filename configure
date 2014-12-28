@@ -5,7 +5,7 @@ detect_linux () {
   if [ -e "/etc/centos-release" ]; then
     echo Detected a CentOS distribution.
     case `cat /etc/centos-release` in
-    "CentOS Linux release 6"*)
+    "CentOS release 6"*)
       echo Detected CentOS 6 distribution.
       cp centos_6 opam-installext ;;
     "CentOS Linux release 7"*)

@@ -2,7 +2,10 @@
 
 detect_linux () {
   echo Detected Linux kernel.
-  if [ -e "/etc/lsb-release" ]; then
+  if [ -e "/etc/debian_version" ]; then
+    echo Detected Debian distribution.
+    cp debian opam-installext
+  elif [ -e "/etc/lsb-release" ]; then
     . /etc/lsb-release
     case $DISTRIB_ID in
     "Ubuntu")

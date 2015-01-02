@@ -5,6 +5,21 @@ detect_linux () {
   if [ -e "/etc/debian_version" ]; then
     echo Detected Debian distribution.
     cp debian opam-installext
+  elif [ -e "/etc/centos-release" ]; then
+    echo Detected a CentOS distribution.
+    case `cat /etc/centos-release` in
+    "CentOS release 6"*)
+      echo Detected CentOS 6 distribution.
+      cp centos_6 opam-installext ;;
+    "CentOS Linux release 7"*)
+      echo Detected CentOS 7 distribution.
+      cp centos_7 opam-installext ;;
+    *)
+      echo Unknown CentOS distribution.
+      echo Please submit a bug report or patch at:
+      echo https://github.com/ocaml/opam-installext/issues
+      exit 1 ;;
+    esac
   elif [ -e "/etc/lsb-release" ]; then
     . /etc/lsb-release
     case $DISTRIB_ID in
@@ -18,21 +33,6 @@ detect_linux () {
       ;;
     *) 
       echo Unknown Linux distribution $DISTRIB_ID.
-      echo Please submit a bug report or patch at:
-      echo https://github.com/ocaml/opam-installext/issues
-      exit 1 ;;
-    esac
-  elif [ -e "/etc/centos-release" ]; then
-    echo Detected a CentOS distribution.
-    case `cat /etc/centos-release` in
-    "CentOS Linux release 6"*)
-      echo Detected CentOS 6 distribution.
-      cp centos_6 opam-installext ;;
-    "CentOS Linux release 7"*)
-      echo Detected CentOS 7 distribution.
-      cp centos_7 opam-installext ;;
-    *)
-      echo Unknown CentOS distribution.
       echo Please submit a bug report or patch at:
       echo https://github.com/ocaml/opam-installext/issues
       exit 1 ;;

@@ -38,7 +38,7 @@ detect_linux () {
       exit 1 ;;
     esac
   else
-    echo Unknown Linux distribution $DISTRIB_ID.
+    echo Unknown Linux distribution, and no lsb-release or similar found.
     echo Please submit a bug report or patch at:
     echo https://github.com/ocaml/opam-installext/issues
     exit 1

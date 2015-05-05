@@ -2,7 +2,10 @@
 -----------------
 
 **This plugin is now deprecated in favour of [depext](https://github.com/ocaml/opam-depext).**
-  You can install it via `opam install depext` and then `opam depext -i <package>`
+
+**You can install the new plugin via `opam install depext` and then `opam depext -i <package>`**
+
+**Historical README follows:*
 
 This OPAM plugin will use the `depexts` metadata in the OPAM database to
 install any prerequisite system libraries before installing the OPAM package.
